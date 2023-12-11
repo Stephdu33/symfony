@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;;
+use Doctrine\Persistence\ObjectManager;
 
 
 class CategoryFixtures extends Fixture
@@ -17,7 +17,8 @@ class CategoryFixtures extends Fixture
         'Historique',
         'Fantastique',
         'Policière',
-        'Drame'];
+        'Drame'
+    ];
     /**
      * Undocumented function
      *

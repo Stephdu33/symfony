@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saisons #{{ season.id }}
+{% endblock %}
+
+{% block body %}
+	<div class="media">
+		<div class="media-body">
+			<h1 class="mt-0">{{ season.number }}</h1>
+			<p>{{ season.year }}</p>
+			<p>{{ season.description }}</p>
+		</div>
+	</div>
+{% endblock %}
