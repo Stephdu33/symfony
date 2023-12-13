@@ -15,9 +15,6 @@ class CategoryFixtures extends Fixture
         'Romance',
         'Comédie',
         'Historique',
-        'Fantastique',
-        'Policière',
-        'Drame'
     ];
     /**
      * Undocumented function

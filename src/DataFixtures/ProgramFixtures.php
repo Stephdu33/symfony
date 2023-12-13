@@ -7,46 +7,28 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+use Faker\Factory;
+
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const PROGRAMS = [
-        [
-            'title' => 'Dead To Me', 'synopsis' => 'Accablée de chagrin et de colère après la mort tragique de son mari, 
-l\'agent immobilier Jen, une femme acide, rencontre l\'empathique Judy dans un groupe de soutien', 'category' => 'category_Comédie',
-            'country' => 'USA', 'year' => '2019'
-        ],
-        [
-            'title' => 'Stranger Things', 'synopsis' => 'Quand un jeune garçon disparaît, une petite ville découvre une affaire mystérieuse, des expériences secrètes, 
-des forces surnaturelles terrifiantes... et une fillette', 'category' => 'category_Fantastique',
-            'country' => 'USA', 'year' => '2016'
-        ],
-        [
-            'title' => 'The Tudors', 'synopsis' => 'Dans l\'Angleterre du XVIe siècle, le jeune Henri VIII accède au trône. Un ambassadeur, 
-l\'oncle du roi, ayant été assassiné en Italie, cet événement précipite la gestion des affaires diplomatiques 
-et Henri veut riposter en déclarant la guerre au royaume de France, accusé d\'être l\'instigateur de ce crime.', 'category' => 'category_Historique',
-            'country' => 'USA', 'year' => '2007'
-        ],
-        [
-            'title' => 'Braquo', 'synopsis' => 'Suite à la condamnation injuste et au suicide de leur chef de groupe, trois flics de la PJ ont la tentation de franchir la ligne rouge.', 'category' => 'category_Policière',
-            'country' => 'France', 'year' => '2009'
-        ],
-        [
-            'title' => 'Outlander', 'synopsis' => 'Les aventures de Claire, une infirmière de guerre mariée qui se retrouve accidentellement propulsée en pleine campagne écossaise de 1743.', 'category' => 'category_Romance',
-            'country' => 'UK', 'year' => '2014'
-        ]
-    ];
-
     public function load(ObjectManager $manager)
     {
-        foreach (self::PROGRAMS as $programName) {
-            $program = new Program();
-            $program->setTitle($programName['title']);
-            $program->setSynopsis($programName['synopsis']);
-            $program->setCountry($programName['country']);
-            $program->setYear($programName['year']);
-            $program->setCategory($this->getReference($programName['category']));
-            $this->addReference('program_' . $programName['title'], $program);
-            $manager->persist($program);
+        $faker = Factory::create();
+        foreach (CategoryFixtures::CATEGORIES as $categoryName) {
+
+            for ($i = 1; $i <= 5; $i++) {
+                $program = new Program();
+
+                $program->setTitle($faker->title());
+                $program->setSynopsis($faker->realText(200));
+                $program->setPoster($faker->image(null, 360, 360, 'film', true));
+                $program->setCountry($faker->countryCode());
+                $program->setYear($faker->year());
+                $program->setCategory($this->getReference('category_' . $categoryName));
+                $this->addReference('program_' . $i . 'category_' . $categoryName, $program);
+
+                $manager->persist($program);
+            }
         }
         $manager->flush();
     }

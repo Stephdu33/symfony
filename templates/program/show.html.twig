@@ -15,8 +15,10 @@
 			</h2>
 			<ul>
 				{% for season in program.seasons %}
-					<li>Saison
-						{{ season.number }}</li>
+					<li>
+						<a href="{{ path('program_season_show', { 'programId':program.id, 'seasonId':season.id }) }}">Saison
+							{{ season.number }}</a>
+					</li>
 				{% endfor %}
 			</ul>
 		</div>
